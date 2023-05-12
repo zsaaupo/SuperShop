@@ -32,8 +32,7 @@ class UserRegistrationAPIView(generics.CreateAPIView):
             response = super().post(request, *args, **kwargs)
             if response.status_code == 201:
                 user = self.get_serializer().Meta.model.objects.get(email=request.data.get('email'))
-                token, _ = Token.objects.get_or_create(user=user)
-                return Response({'token': token.key}, status=201)
+                return Response("Registerd", status=201)
             return response
 
         except Exception as ex:
@@ -65,9 +64,14 @@ class UserLoginAPIView(APIView):
             
             if user is not None:
                 login(request, user)
-                token, created = Token.objects.get_or_create(user=user)
+                from rest_framework_simplejwt.tokens import RefreshToken
+                token = RefreshToken.for_user(user)
+                data = {}
+                data['user_name'] = user.name
+                data['access'] = str(token.access_token)
+                data['token'] = str(token)
                 
-                return Response({'token': token.key}, status=200)
+                return Response(data)
             
             return Response({'error': 'Invalid credentials'}, status=401)
         
