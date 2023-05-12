@@ -3,7 +3,7 @@ from django.db import models
 
 class Sales(models.Model):
     
-    id = models.CharField(max_length=30, unique=True, primary_key=True)
+    id = models.IntegerField(unique=True, primary_key=True)
     order_id = models.CharField(max_length=30, null=True, blank=True)
     ship_date = models.DateField()
     ship_mode = models.CharField(max_length=30, null=True, blank=True)
@@ -18,4 +18,8 @@ class Sales(models.Model):
     catagory = models.CharField(max_length=30, null=True, blank=True)
     sub_catagory = models.CharField(max_length=30, null=True, blank=True)
     product_name = models.CharField(max_length=30, null=True, blank=True)
-    sales = models.CharField(max_length=30, null=True, blank=True)
+    sales = models.IntegerField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.order_id
+    
