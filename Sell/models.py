@@ -4,10 +4,10 @@ from django.db import models
 class Sales(models.Model):
     
     id = models.IntegerField(unique=True, primary_key=True)
-    order_id = models.CharField(max_length=30, null=True, blank=True)
+    order_id = models.CharField(max_length=30, null=True, blank=True, unique=True)
     ship_date = models.DateField()
     ship_mode = models.CharField(max_length=30, null=True, blank=True)
-    customer_id = models.CharField(max_length=30, null=True, blank=True)
+    customer_id = models.CharField(max_length=30, null=True, blank=True, unique=True)
     customer_name = models.CharField(max_length=30, null=True, blank=True)
     segment = models.CharField(max_length=30, null=True, blank=True)
     country = models.CharField(max_length=30, null=True, blank=True)
@@ -22,4 +22,3 @@ class Sales(models.Model):
     
     def __str__(self):
         return self.order_id
-    
